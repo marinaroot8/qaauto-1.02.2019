@@ -1,0 +1,80 @@
+# qaauto-1.02.2019
+
+##### To configure environment tools need to be installed:
+
+  - Intellij IDEA 
+  - (JDK) Java SE Development Kit 8
+  - ChromeDriver - WebDriver for Chrome 
+  - Selenium Java (3.141.59 the latest version) Copy Maven dependency code
+  ```sh
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>3.141.59</version>
+</dependency>
+
+```
+  
+### Intellij IDEA configurations
+> Create new project in IDEA
+Go to pom.xml file
+Add dependency in <project> 
+(Selenium java dependensy need to be wraped by <dependencies> </dependencies> tag )
+
+##### This is how it looks
+in IDEA pom.xml file
+```sh
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.skillup</groupId>
+    <artifactId>qaauto-1.02.2019</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+    <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+    </dependencies>
+    
+</project>
+```
+ 
+ ### 1st selenium test :)
+ - print Hello World
+ - open browser
+ - go to google
+ - type smth in the search field
+ - press enter on keyboard
+ 
+ class should has his name 'BedCodeExample'
+ 
+ to open browser - path to the webdriver chrome should be pointed
+ ```sh
+ import org.openqa.selenium.By;
+ import org.openqa.selenium.Keys;
+ import org.openqa.selenium.WebDriver;
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.chrome.ChromeDriver;
+ import org.openqa.selenium.interactions.Actions;
+ 
+ public class BedCodeExample {
+     public static void main(String[] args) {
+         System.out.println("Hello World");
+         System.setProperty("webdriver.chrome.driver", "/Users/marina/Downloads/chromedriver");
+         WebDriver driver = new ChromeDriver();
+         driver.get("https://www.google.com");
+         WebElement element = driver.findElement(By.name("q"));
+         element.sendKeys("tatata");
+         driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
+ 
+     }
+ }
+ ```
