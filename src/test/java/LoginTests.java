@@ -17,7 +17,7 @@ public class LoginTests {
 
                 LandingPage landingPage = new LandingPage(driver);
                 landingPage.login(  "a@b.c", "");
-
+//
 
  //               System.setProperty("webdriver.chrome.driver", "/Users/marina/Downloads/chromedriver");
   //              WebDriver driver = new ChromeDriver();
