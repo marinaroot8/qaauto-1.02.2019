@@ -15,15 +15,12 @@ public class LoginTests {
                 WebDriver driver = new ChromeDriver();
                 driver.get("https://www.linkedin.com/");
 
-                LandingPage landingPage = new LandingPage(driver);
-                landingPage.login(  "a@b.c", "");
-//
+                String titleUnlogin = driver.getTitle();
+                WebElement singInButton = driver.findElement(By.xpath("//input[@class='login submit-button']"));
+                String currentUrlUnlogin = driver.getCurrentUrl();
 
- //               System.setProperty("webdriver.chrome.driver", "/Users/marina/Downloads/chromedriver");
-  //              WebDriver driver = new ChromeDriver();
- //               driver.get("https://www.linkedin.com/");
 
-//                Assert.assertEquals(driver.getTitle(),"LinkedIn: Log In or Sign Up", "Login page title is wrong");
+                Assert.assertEquals(driver.getTitle(),"LinkedIn: Log In or Sign Up", "Login page title is wrong");
 //
 //                // HOMEWORK 4 at home
 //
@@ -64,7 +61,7 @@ public class LoginTests {
 //            // Successful Login
 
         }
-                @Test
+            //    @Test
                 public void successfulLoginTest() {
 
                 //MINE
@@ -86,10 +83,6 @@ public class LoginTests {
                         WebElement profileNavMenuItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
                         Assert.assertTrue(profileNavMenuItem.isDisplayed(), "Login failed. Home page didn't load after Login");
 
-                }
-
-                @Test
-                 public void successfulLoginTestHome() {
 
 
                 }

@@ -5,34 +5,34 @@ import org.testng.Assert;
 
 public class LandingPage {
 
-    WebDriver driver;
+    private WebDriver driver;
 
-    WebElement signInButton;
-    WebElement userEmailField;
-    WebElement userPasswordField;
+    private  WebElement signInButton;
+    private  WebElement userEmailField;
+    private  WebElement userPasswordField;
+
 
     public LandingPage(WebDriver driver) {
         this.driver = driver;
         initElements();
-        isPageLoaded();
     }
-
-    public void initElements() {
+    private void initElements() {
         signInButton = driver.findElement(By.xpath("//input[@class='login submit-button']"));
         userEmailField = driver.findElement(By.name("session_key"));
         userPasswordField = driver.findElement(By.name("session_password"));
+
     }
 
-
     public void login(String userEmail, String userPassword) {
-        userEmailField.sendKeys("a@b.c");
-        userPasswordField.sendKeys("");
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
         signInButton.click();
     }
 
-    public void isPageLoaded() {
-        Assert.assertTrue(signInButton.isDisplayed(), "SignIn button is not displayed");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
-        Assert.assertEquals(driver.getTitle(),"LinkedIn: Log In or Sign Up", "Login page title is wrong");
+    public boolean isPageLoaded() {
+        return signInButton.isDisplayed()
+                && driver.getCurrentUrl().equals("https://www.linkedin.com/")
+                && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
+
     }
 }
