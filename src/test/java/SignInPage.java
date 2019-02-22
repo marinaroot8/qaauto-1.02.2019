@@ -7,6 +7,7 @@ public class SignInPage {
     private WebDriver driver;
     private WebElement errorForUsername;
     private WebElement passwordValidationMessage;
+    private WebElement emailValidationMessage;
 
     public SignInPage(WebDriver driver) {
         this.driver = driver;
@@ -18,8 +19,8 @@ public class SignInPage {
     private void initElements() {
         errorForUsername = driver.findElement(By.xpath("//div[@id='error-for-username']"));
         passwordValidationMessage = driver.findElement(By.xpath("//*[@id='error-for-password']"));
+        emailValidationMessage = driver.findElement(By.xpath("//div[@id='error-for-username']"));
     }
-
     public boolean isPageLoaded() {
         return (errorForUsername.isDisplayed()
                 || passwordValidationMessage.isDisplayed())
@@ -34,10 +35,10 @@ public class SignInPage {
     public String getPasswordValidationMessageText() {
         return passwordValidationMessage.getText();
     }
+    public String getEmailValidationMessageText() {
+        return emailValidationMessage.getText();
+    }
+    }
 
 
 
-
-
-
-}

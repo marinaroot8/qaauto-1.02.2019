@@ -1,31 +1,46 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LandingPage {
 
     private WebDriver driver;
 
+    @FindBy(xpath = "//input[@class='login submit-button']")
     private  WebElement signInButton;
+
+    @FindBy (name = "session_key")
     private  WebElement userEmailField;
+
+    @FindBy (name = "session_password")
     private  WebElement userPasswordField;
 
 
     public LandingPage(WebDriver driver) {
         this.driver = driver;
-        initElements();
-    }
-    private void initElements() {
-        signInButton = driver.findElement(By.xpath("//input[@class='login submit-button']"));
-        userEmailField = driver.findElement(By.name("session_key"));
-        userPasswordField = driver.findElement(By.name("session_password"));
-
+        PageFactory.initElements(driver, this);
     }
 
-    public void login(String userEmail, String userPassword) {
+    public HomePage login(String userEmail, String userPassword) {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
+        return new HomePage(driver);
+    }
+
+    public SignInPage loginToSignInPage(String userEmail, String userPassword) {
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+        return new SignInPage(driver);
+    }
+
+    public LandingPage loginToLandingPage(String userEmail, String userPassword) {
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+        return new LandingPage(driver);
     }
 
     public boolean isPageLoaded() {
@@ -35,3 +50,5 @@ public class LandingPage {
 
     }
 }
+обновить 2 оставшихся класса с анотацией
+объединить 3 метода где логин в 1 в лендинг пейдже (if добавить)
