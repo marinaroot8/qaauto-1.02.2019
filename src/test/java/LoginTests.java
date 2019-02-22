@@ -19,30 +19,45 @@ public class LoginTests {
     }
 
     @AfterMethod
-    public void afterMeyhod(){
+    public void afterMeyhod() {
         driver.quit();
     }
 
-    @Test
-    public void negativeLoginTest() {
+
+    @DataProvider
+    public Object[][] notValidDataLandingPage() {
+        return new Object[][]{
+                {"dfd@ms.ru", ""},
+                {"", "111111Qa"},
+                {"вуасук@ms.ru", ""},
+                {"", "1"},
+                {"*&^%$#@ms.ru", ""}
+        };
+    }
+
+    @Test(dataProvider = "notValidDataLandingPage")
+    public void negativeLoginTest(String userEmail, String userPassword) {
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded");
 
-        landingPage.login("dfd@ms.ru", "");
+        landingPage.login(userEmail, userPassword);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded");
+
+
     }
 
     @DataProvider
     public Object[][] validData() {
         return new Object[][]{
-                { "sizag@webmails.top", "111111Qa" },
-                { "Sizag@webmails.top", "111111Qa" },
-                { " sizag@webmails.top ", "111111Qa" }
+                {"sizag@webmails.top", "111111Qa"},
+                {"Sizag@webmails.top", "111111Qa"},
+                {" sizag@webmails.top ", "111111Qa"}
         };
     }
+
     @Test(dataProvider = "validData")
     public void successfulLoginTestHome(String userEmail, String userPassword) {
 
@@ -54,48 +69,33 @@ public class LoginTests {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page didn't load after Login");
+
+
     }
 
-    @Test
-    public void negativeLoginWrongPass() {
+    @DataProvider
+    public Object[][] notValidDataSignInPage() {
+        return new Object[][]{
+                {" sizag@webmails.top ", "111111", "Hmm, that's not the right password. Please try again or request a new one.",
+                        "Wrong validation message password"},
+        };
+    }
+
+    @Test(dataProvider = "notValidDataSignInPage")
+    public void negativeLoginWrongPass(String userEmail, String userPassword, String expectedError, String wrongError) {
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(),
                 "Landing page is not loaded");
 
-        landingPage.login("sizg@webmails.top", "111111Qa");
-        SignInPage signInPage = new SignInPage(driver);
-        Assert.assertTrue(signInPage.isPageLoaded(),
-                "Sign In Page is not loaded");
-    }
-
-    @Test
-    public void negativeIsTitleShown() {
-
-        LandingPage landingPage = new LandingPage(driver);
-        Assert.assertTrue(landingPage.isPageLoaded(),
-                "Landing page is not loaded");
-
-        landingPage.login("dfd@ms.ru", "yftf");
+        landingPage.login(userEmail, userPassword);
         SignInPage signInPage = new SignInPage(driver);
         Assert.assertTrue(signInPage.isPageLoaded(),
                 "Sign In Page is not loaded");
 
-        Assert.assertTrue(signInPage.isTitleShown());
+        Assert.assertEquals(signInPage.getPasswordValidationMessageText(), expectedError, wrongError);
+
+
     }
 
-    @Test
-    public void negativeIsErrorMsgShown() {
-
-        LandingPage landingPage = new LandingPage(driver);
-        Assert.assertTrue(landingPage.isPageLoaded(),
-                "Landing page is not loaded");
-
-        landingPage.login("sizag@webmails.top", "yftf");
-        SignInPage signInPage = new SignInPage(driver);
-        Assert.assertTrue(signInPage.isPageLoaded(),
-                "Sign In Page is not loaded");
-        Assert.assertEquals(signInPage.getPasswordValidationMessageText(), "Hmm, that's not the right password. Please try again or request a new one.",
-                "Wrong validation message password");
-    }
 }
