@@ -35,7 +35,7 @@ public class LoginTests {
     public void negativeLoginTest(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded");
 
-        landingPage.loginToLandingPage(userEmail, userPassword);
+        landingPage.loginGeneral(userEmail, userPassword);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded");
     }
     @DataProvider
@@ -50,7 +50,7 @@ public class LoginTests {
     public void successfulLoginTestHome(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded");
 
-        HomePage homePage = landingPage.login(userEmail, userPassword);
+        HomePage homePage = landingPage.loginGeneral(userEmail, userPassword);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page didn't load after Login");
     }
     @DataProvider
@@ -64,10 +64,9 @@ public class LoginTests {
     public void negativeLoginWrongPass(String userEmail, String userPassword, String emailError, String passwordError) {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded");
 
-        SignInPage signInPage = landingPage.loginToSignInPage(userEmail, userPassword);
+        SignInPage signInPage = landingPage.loginGeneral(userEmail, userPassword);
         Assert.assertTrue(signInPage.isPageLoaded(), "Sign In Page is not loaded");
         Assert.assertEquals(signInPage.getEmailValidationMessageText(), emailError, "Hmm, we don't recognize that email. Please try again.");
         Assert.assertEquals(signInPage.getPasswordValidationMessageText(), passwordError, "Hmm, that's not the right password. Please try again or request a new one.");
     }
-
 }

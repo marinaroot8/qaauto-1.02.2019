@@ -22,33 +22,24 @@ public class LandingPage {
         PageFactory.initElements(driver, this);
     }
 
-    public HomePage login(String userEmail, String userPassword) {
+    public <T> T loginGeneral(String userEmail, String userPassword) {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
-        return new HomePage(driver);
-    }
-
-    public SignInPage loginToSignInPage(String userEmail, String userPassword) {
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-        return new SignInPage(driver);
-    }
-
-    public LandingPage loginToLandingPage(String userEmail, String userPassword) {
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-        return new LandingPage(driver);
+        if (driver.getCurrentUrl().contains("/feed/")) {
+            return (T) new HomePage(driver);
+        }
+        if (driver.getCurrentUrl().contains("/login-submit")){
+            return (T) new SignInPage(driver);
+        }
+        else {
+            return (T) new LandingPage(driver);
+        }
     }
 
     public boolean isPageLoaded() {
         return signInButton.isDisplayed()
                 && driver.getCurrentUrl().equals("https://www.linkedin.com/")
                 && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
-
     }
 }
-//обновить 2 оставшихся класса с анотацией
-//объединить 3 метода где логин в 1 в лендинг пейдже (if добавить)
