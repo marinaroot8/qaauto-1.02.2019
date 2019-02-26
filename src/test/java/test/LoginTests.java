@@ -1,26 +1,15 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.HomePage;
+import page.SignInPage;
+import test.BaseTest;
 
-public class LoginTests {
-    WebDriver driver;
-    LandingPage landingPage;
+public class LoginTests extends BaseTest {
 
-    @BeforeMethod
-    public void beforeMethod() {
-        System.setProperty("webdriver.chrome.driver", "/Users/marina/Downloads/chromedriver");
-        driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
-        landingPage = new LandingPage(driver);
-    }
-    @AfterMethod
-    public void afterMeyhod() {
-        driver.quit();
-    }
+
     @DataProvider
     public Object[][] notValidDataLandingPage() {
         return new Object[][]{
